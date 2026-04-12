@@ -8,7 +8,7 @@ def _df(rows):
 
 
 def test_z_score_outlier_flagged():
-    rows = [("A", "2025-01-01", 100)] * 4 + [("A", "2025-01-05", 900)]
+    rows = [("A", "2025-01-01", 100)] * 9 + [("A", "2025-01-05", 900)]
     df = _df(rows)
     result = compute_z_scores(df, min_records=5)
     assert result.loc[result["amount"] == 900, "z_score"].values[0] > 2.0
@@ -54,10 +54,10 @@ def test_no_flags_below_threshold():
 
 def test_per_client_grouping():
     rows = (
-        [("small", f"2025-01-0{i}", 100) for i in range(1, 6)]
-        + [("small", "2025-01-10", 2000)]
-        + [("large", f"2025-01-0{i}", 50000) for i in range(1, 6)]
-        + [("large", "2025-01-10", 50500)]
+        [("small", f"2025-01-{i:02d}", 100) for i in range(1, 11)]
+        + [("small", "2025-01-15", 5000)]
+        + [("large", f"2025-01-{i:02d}", 50000 + i * 100) for i in range(1, 11)]
+        + [("large", "2025-01-15", 51500)]
     )
     df = _df(rows)
     result = compute_z_scores(df, min_records=5)

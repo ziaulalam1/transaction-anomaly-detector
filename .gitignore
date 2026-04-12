@@ -4,4 +4,8 @@ __pycache__/
 .venv/
 *.xlsx
 sample_transactions.csv
+labeled_transactions.csv
+.pytest_cache/
+INTERVIEW.md
+.claude/
 .DS_Store
